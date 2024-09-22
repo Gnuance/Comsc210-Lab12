@@ -7,23 +7,24 @@
 #include <array>
 #include <string>
 #include <algorithm> // sort(), find()
-#include <numeric> // accumulate()
+#include <numeric>   // accumulate()
 
 using namespace std;
 
-bool IsInt(const string &str); // Checks if string is an integer
+bool IsInt(const string &str);      // Checks if string is an integer
 void SetForegroundColor(int color); // Changes cout letter color
 void SetBackgroundColor(int color); // Changes cout background color
-void ResetColor(); // Resets console output color
+void ResetColor();                  // Resets console output color
 
 int main()
 {
     // Initialize variables
     const string DIVIDER = string(25, '*');
+    const string COLOR_BAR = string(15, ' ');
     const unsigned int SIZE = 30;
     string fileLine = "";
     array<int, SIZE> colorCodes = {}; // Initialize array, will be destroyed and redefined during file read
-    array<int, SIZE>::iterator it; // Iterator to traverse array
+    array<int, SIZE>::iterator it;    // Iterator to traverse array
     unsigned int index = 0;
     // File to read from
     const string INPUT_FILE_NAME = "colorCodes.txt";
@@ -43,33 +44,88 @@ int main()
             }
         }
         // CLOSE THE F-ING FILE
-        inputFile.close();     
+        inputFile.close();
 
         // Now we have color codes in the array, let's play with array methods and output some colors to console :-D
         // Output all colors numbers to screen with colored font
         cout << "Color Codes:" << endl;
         index = 0;
-        for (it = colorCodes.begin(); it != colorCodes.end(); ++it){
-            cout << *it << " ";            
+        for (auto it = colorCodes.begin(); it != colorCodes.end(); ++it)
+        {
+            cout << *it << " ";
             index++;
-            if (index % 10 == 0) cout << endl; // Add line spacing
+            if (index % 10 == 0)
+                cout << endl; // Add line spacing
         }
-        
+
         cout << "\nColored Color Codes:" << endl;
         index = 0;
-        for (it = colorCodes.begin(); it != colorCodes.end(); ++it){
+        for (auto it = colorCodes.begin(); it != colorCodes.end(); ++it)
+        {
             SetForegroundColor(*it);
-            cout << *it << " ";            
+            cout << *it << " ";
             index++;
-            if (index % 10 == 0) cout << endl; // Add line spacing
+            if (index % 10 == 0)
+                cout << endl; // Add line spacing
         }
         ResetColor();
+
+        cout << "\nReversed Color Background Color Codes:" << endl;
+        index = 0;
+        for (auto it = colorCodes.rbegin(); it != colorCodes.rend(); ++it)
+        {
+            SetBackgroundColor(*it);
+            cout << *it << " ";
+            index++;
+            if (index % 10 == 0)
+                cout << endl; // Add line spacing
+        }
+        ResetColor();
+
+        // Output min, max and average
+        cout << "\nMin Color: ";
+        SetBackgroundColor(*min_element(colorCodes.begin(), colorCodes.end()));
+        cout << COLOR_BAR;
+        ResetColor();
+        cout << endl << endl;
+
+        cout << "Max Color: ";
+        SetBackgroundColor(*max_element(colorCodes.begin(), colorCodes.end()));
+        cout << COLOR_BAR;
+        ResetColor();
+        cout << endl << endl;
+
+        cout << "Ave Color (accumulate / array size): ";
+        SetBackgroundColor(int(accumulate(colorCodes.begin(), colorCodes.end(), 0) / colorCodes.size()));
+        cout << accumulate(colorCodes.begin(), colorCodes.end(), 0) / colorCodes.size() << "     ";
+        ResetColor();
+        cout << endl << endl;
+
+        // Sort codes and print list
+        sort(colorCodes.begin(), colorCodes.end());
+        cout << "Colored Color Codes After Sorting:" << endl;
+        index = 0;
+        for (auto it = colorCodes.begin(); it != colorCodes.end(); ++it)
+        {
+            SetForegroundColor(*it);
+            cout << *it << " ";
+            index++;
+            if (index % 10 == 0)
+                cout << endl; // Add line spacing
+        }
+        ResetColor();
+
+        // Print color at index 17
+        cout << "\nColor Code At Index 17: ";
+        SetBackgroundColor(colorCodes.at(17));
+        cout << colorCodes.at(17) << " ";
+        ResetColor();
+        cout << endl << endl;
     }
     else // Output error if file no good
     {
         cerr << "Error opening file! Better luck next time..." << endl;
-    }    
-
+    }
 
     // Deallocate heap elements and nullify pointers
     // delete[] clientRosterPtr;
@@ -92,14 +148,17 @@ bool IsInt(const string &str)
 }
 
 // Changes cout letter color
-void SetForegroundColor(int color){
+void SetForegroundColor(int color)
+{
     cout << "\033[38;5;" << color << "m";
 }
 // Changes cout background color
-void SetBackgroundColor(int color){
+void SetBackgroundColor(int color)
+{
     cout << "\033[48;5;" << color << "m";
 }
 // Resets console output color
-void ResetColor(){
+void ResetColor()
+{
     cout << "\033[0m";
 }
