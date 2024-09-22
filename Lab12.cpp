@@ -70,7 +70,7 @@ int main()
         }
         ResetColor();
 
-        cout << "\nReversed Color Background Color Codes:" << endl;
+        cout << "\nReverse Iterated Color Background Color Codes:" << endl;
         index = 0;
         for (auto it = colorCodes.rbegin(); it != colorCodes.rend(); ++it)
         {
@@ -82,24 +82,41 @@ int main()
         }
         ResetColor();
 
-        // Output min, max and average
-        cout << "\nMin Color: ";
+        // Output front, back min, max and average
+        cout << "\nFront Color: ";
+        SetBackgroundColor(colorCodes.front());
+        cout << COLOR_BAR;
+        ResetColor();
+        cout << endl
+             << endl;
+
+        cout << "Back Color: ";
+        SetBackgroundColor(colorCodes.back());
+        cout << COLOR_BAR;
+        ResetColor();
+        cout << endl
+             << endl;
+
+        cout << "Min Color: ";
         SetBackgroundColor(*min_element(colorCodes.begin(), colorCodes.end()));
         cout << COLOR_BAR;
         ResetColor();
-        cout << endl << endl;
+        cout << endl
+             << endl;
 
         cout << "Max Color: ";
         SetBackgroundColor(*max_element(colorCodes.begin(), colorCodes.end()));
         cout << COLOR_BAR;
         ResetColor();
-        cout << endl << endl;
+        cout << endl
+             << endl;
 
         cout << "Ave Color (accumulate / array size): ";
         SetBackgroundColor(int(accumulate(colorCodes.begin(), colorCodes.end(), 0) / colorCodes.size()));
         cout << accumulate(colorCodes.begin(), colorCodes.end(), 0) / colorCodes.size() << "     ";
         ResetColor();
-        cout << endl << endl;
+        cout << endl
+             << endl;
 
         // Sort codes and print list
         sort(colorCodes.begin(), colorCodes.end());
@@ -120,7 +137,11 @@ int main()
         SetBackgroundColor(colorCodes.at(17));
         cout << colorCodes.at(17) << " ";
         ResetColor();
-        cout << endl << endl;
+        cout << endl
+             << endl;
+
+        // Sum of all color codes
+        cout << "Sum of color codes: " << accumulate(colorCodes.begin(), colorCodes.end(), 0) << endl;
     }
     else // Output error if file no good
     {
