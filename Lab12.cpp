@@ -1,5 +1,5 @@
 // Program reads 30 ints from a file ranging from 0-255 representing 8-bit color codes, stores those codes in an array,
-//  and exercises various array methods and outputs colors to console
+//  and exercises various std::array methods and outputs colors to console
 
 #include <iostream>
 #include <fstream>
@@ -141,17 +141,26 @@ int main()
              << endl;
 
         // Sum of all color codes
-        cout << "Sum of color codes: " << accumulate(colorCodes.begin(), colorCodes.end(), 0) << endl;
+        cout << "Sum of color codes: " << accumulate(colorCodes.begin(), colorCodes.end(), 0) << endl
+             << endl;
+
+        // Find target color code
+        cout << "Find position of target 209: ";
+        it = find(colorCodes.begin(), colorCodes.end(), 209);
+        // If iterator is passed end, color not found
+        if (it > colorCodes.end())
+        {
+            cout << "Color not found." << endl;
+        }
+        else
+        {
+            cout << "Color found in index: " << it - colorCodes.begin() << endl;
+        }
     }
     else // Output error if file no good
     {
         cerr << "Error opening file! Better luck next time..." << endl;
     }
-
-    // Deallocate heap elements and nullify pointers
-    // delete[] clientRosterPtr;
-    // clientRosterPtr = nullptr;
-
     return 0;
 }
 
@@ -173,11 +182,13 @@ void SetForegroundColor(int color)
 {
     cout << "\033[38;5;" << color << "m";
 }
+
 // Changes cout background color
 void SetBackgroundColor(int color)
 {
     cout << "\033[48;5;" << color << "m";
 }
+
 // Resets console output color
 void ResetColor()
 {
