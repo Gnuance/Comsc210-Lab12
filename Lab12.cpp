@@ -14,10 +14,26 @@ bool isInt(const string &str); // Checks if string is an integer
 int main()
 {
     // Initialize variables
+    const string DIVIDER = string(30, '*');
+    string fileLine = "";
+    array<int,0> colorCodes = {}; // Initialize array, will be destroyed and redefined during file read
+    // File to read from
     const string INPUT_FILE_NAME = "colorCodes.txt";
     ifstream inputFile(INPUT_FILE_NAME);
-    const string DIVIDER = string(30, '*');
     
+    // Output error to console if file is no good
+    if (!inputFile) {
+        cerr << "Error opening file!" << endl;
+    } else {
+        // File is good, begin checking data. Start by counting lines, then add to array
+        while (getline(inputFile, fileLine))
+        {
+            
+        }
+        
+        // if (stoi(fileLine)) 
+
+    }
     
 
     cout << "\033[48;5;238m     " << endl;
